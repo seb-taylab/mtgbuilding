@@ -1,0 +1,38 @@
+{
+ "deck": "Wakanda v4.1",
+ "commander": "T'Challa, the Black Panther",
+ "list": "engine/oneoff_wakanda/decks/v41_final.json",
+ "engine": "engine/oneoff_wakanda/sim_r3.py",
+ "tolerance": {
+  "same_engine": "identical with the same seeds",
+  "cross_engine": "unpaired bar: 2*sqrt(SE1^2+SE2^2) and >=2 points"
+ },
+ "profile": "abstract_table + house.first_player_skips_draw (one-off sim conventions)",
+ "expected_exact": {
+  "goldfish_T10": {
+   "value": 82.6,
+   "N": 12000,
+   "seed": 2026,
+   "mode": "gold"
+  },
+  "disruption_T12": {
+   "value": 85.0,
+   "N": 12000,
+   "seed": 2027,
+   "mode": "disrupt"
+  },
+  "pod_T12": {
+   "value": 73.7,
+   "N": 12000,
+   "seed": 2028,
+   "mode": "pod"
+  },
+  "pod_win": {
+   "value": 31.3,
+   "N": 12000,
+   "seed": 2028,
+   "table_seed": 7
+  }
+ },
+ "note": "Exact-seed numbers from reproduce.py. Earlier summaries called the pod-profile T12 (~73%) \"disruption T12\"; the disrupt profile (skill \u00a72 rates, no artifact wipe/edicts) is 85.0%. Judge metric = pod profile T12 until the pod is calibrated."
+}

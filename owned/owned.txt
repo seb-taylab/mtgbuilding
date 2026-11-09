@@ -1,0 +1,4 @@
+# Cards you own (same format: 1 Card Name). Used to build the proxy print list.
+1 The Great Mound
+1 Shuri's Fabricator
+1 Kuldotha Forgemaster

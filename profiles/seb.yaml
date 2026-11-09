@@ -1,0 +1,20 @@
+# Fun profile — Seb (defaults from stated preferences; updated by game logs and picks)
+pace: {preset: casual, table_median: 10, spread: normal, mix: null}   # change per pod night; free text accepted
+win_target: [25, 35]        # pod win %, fair share plus an edge at that pace
+win_weight: 0.6
+strictness: lean
+weights:                    # BUILDER_SPEC §7.1
+  game_length: 15
+  non_games: 15
+  line_variety: 15
+  stacking_moments: 15      # "synergy = stackable impact"
+  centrality: 10
+  decision_density: 10
+  interaction: 10
+  table_health: 10
+red_lines: [monarch, initiative, two_card_infinite, gc_over_3, multi_opponent_lock, mass_land_denial, extra_turn_chains]
+max_gc: 3
+new_print_cap: 20           # proxies: prints are the real cost; money is optional
+house: {snowball_ok: true, three_card_combo_ok: true, finite_definite_kill: true}
+pet_cards: []
+cut_rule: least_synergy     # never "weakest card"

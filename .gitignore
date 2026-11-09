@@ -1,0 +1,7 @@
+# regenerated, not versioned (see README: tools/pull_universe.py, library/parse.py)
+data/universe.json
+library/cardlib.json
+__pycache__/
+*.log
+engine/oneoff_wakanda/*.json
+!engine/oneoff_wakanda/db.json

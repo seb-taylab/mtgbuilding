@@ -1,0 +1,8 @@
+deck: Wakanda
+version: v4.1
+commander: "T'Challa, the Black Panther"
+status: active          # active | shelved | retired
+pod: seb_pod
+pace_fit: slow          # from the pace sweep (2026-11-09)
+kill_pieces: []         # fill for backup runs (ENGINE §8)
+last_check_all: null

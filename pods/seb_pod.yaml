@@ -1,0 +1,9 @@
+pod: seb_pod
+size: 4                       # table size including you
+status: assumed               # assumed | partial | calibrated (>= 20 logged games)
+pace: {preset: casual, table_median: 10, spread: normal}
+opponents:
+  - {commander: "Krenko, Mob Boss", list: assumed (EDHREC average, trimmed to B3), interaction: low}
+  - {commander: "Sephiroth, Fabled SOLDIER", list: assumed (EDHREC average, trimmed to B3), interaction: medium}
+  - {commander: "Y'shtola, Night's Blessed", list: assumed (EDHREC average, trimmed to B3), interaction: high}
+updated: 2026-11-09
