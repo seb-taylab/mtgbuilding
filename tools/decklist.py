@@ -33,22 +33,22 @@ def resolve(items):
 def write(name, res):
     d = os.path.join(ROOT, 'decks', name); os.makedirs(d, exist_ok=True)
     cmd = [n for q, n, c in res if c]; main = [(q, n) for q, n, c in res if not c]
-    with open(os.path.join(d, 'list.txt'), 'w') as f:
+    with open(os.path.join(d, 'list.txt'), 'w', encoding='utf-8') as f:
         f.write('# Commander\n' + ''.join(f'1 {n}\n' for n in cmd) + '# Deck\n' + ''.join(f'{q} {n}\n' for q, n in main))
     return os.path.join(d, 'list.txt')
 def load(name):
-    return parse_lines(open(os.path.join(ROOT, 'decks', name, 'list.txt')).read())
+    return parse_lines(open(os.path.join(ROOT, 'decks', name, 'list.txt'), encoding='utf-8').read())
 if __name__ == '__main__':
     act = sys.argv[1]
     if act == 'import':
-        res, bad = resolve(parse_lines(open(sys.argv[2]).read()))
+        res, bad = resolve(parse_lines(open(sys.argv[2], encoding='utf-8').read()))
         print('wrote', write(sys.argv[3], res), '| cards', sum(q for q, _, _ in res), '| unresolved', bad)
     elif act == 'export':
         items = load(sys.argv[2]); fmt = sys.argv[3] if len(sys.argv) > 3 else 'text'
         if fmt in ('text', 'moxfield'): print('\n'.join(f'{q} {n}' for q, n, c in items))   # Moxfield and Archidekt both accept "1 Name"
         elif fmt == 'csv': print('Quantity,Name,Commander\n' + '\n'.join(f'{q},"{n}",{int(c)}' for q, n, c in items))
         elif fmt == 'proxies':
-            owned_p = os.path.join(ROOT, 'owned', 'owned.txt'); owned = {n.lower(): q for q, n, _ in parse_lines(open(owned_p).read())} if os.path.exists(owned_p) else {}
+            owned_p = os.path.join(ROOT, 'owned', 'owned.txt'); owned = {n.lower(): q for q, n, _ in parse_lines(open(owned_p, encoding='utf-8').read())} if os.path.exists(owned_p) else {}
             basics = {'plains', 'island', 'swamp', 'mountain', 'forest', 'wastes'}
             need = [(q, n) for q, n, c in items if n.lower() not in basics and owned.get(n.lower(), 0) < q]
             print(f'# Proxies to print: {sum(q for q, _ in need)}\n' + '\n'.join(f'{q} {n}' for q, n in need))

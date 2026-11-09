@@ -14,7 +14,7 @@ def canon():
     U, idx = DL.universe(); return U, idx, (lambda n: U[idx[n.strip().lower()]]['name'] if n and n.strip().lower() in idx else None)
 def read_txt(p):
     out = collections.Counter()
-    for l in open(p):
+    for l in open(p, encoding='utf-8'):
         m = re.match(r'^\s*(\d+)\s*x?\s+(.+?)\s*$', l)
         if m: out[m.group(2)] += int(m.group(1))
     return out
@@ -48,20 +48,20 @@ def ingest(xlsx, b1=None, b2=None):
             n = nm(str(r[0])) if r[0] else None
             if n: alloc.append(dict(deck=deck, card=n, qty=1, source=str(r[si]) if si is not None and r[si] else ''))
     os.makedirs(INV, exist_ok=True)
-    with open(os.path.join(INV, 'collection.csv'), 'w', newline='') as f:
+    with open(os.path.join(INV, 'collection.csv'), 'w', newline='', encoding='utf-8') as f:
         w = csv.writer(f); w.writerow(['card', 'real', 'proxy_printed', 'proxy_pending', 'note'])
         for n in sorted(col): w.writerow([n, col[n]['real'], col[n]['proxy_printed'], col[n]['proxy_pending'], '; '.join(sorted(col[n]['note']))])
-    with open(os.path.join(INV, 'allocations.csv'), 'w', newline='') as f:
+    with open(os.path.join(INV, 'allocations.csv'), 'w', newline='', encoding='utf-8') as f:
         w = csv.DictWriter(f, ['deck', 'card', 'qty', 'source']); w.writeheader(); w.writerows(alloc)
     print(f'collection: {len(col)} cards | real {sum(v["real"] for v in col.values())} · printed proxies {sum(v["proxy_printed"] for v in col.values())} · pending {sum(v["proxy_pending"] for v in col.values())}')
     print('active decks:', dict(collections.Counter(a['deck'] for a in alloc)))
 def save(col):
-    rows = list(csv.DictReader(open(os.path.join(INV, 'collection.csv')))); by = {r['card']: r for r in rows}
+    rows = list(csv.DictReader(open(os.path.join(INV, 'collection.csv'), encoding='utf-8'))); by = {r['card']: r for r in rows}
     for n, c in col.items():
         r = by.setdefault(n, dict(card=n, real=0, proxy_printed=0, proxy_pending=0, note=''))
         for k in ('real', 'proxy_printed', 'proxy_pending'): r[k] = c[k]
         if c.get('note'): r['note'] = '; '.join(x for x in sorted(set(filter(None, (r.get('note') or '').split('; ') + [c['note']]))))
-    with open(os.path.join(INV, 'collection.csv'), 'w', newline='') as f:
+    with open(os.path.join(INV, 'collection.csv'), 'w', newline='', encoding='utf-8') as f:
         w = csv.DictWriter(f, ['card', 'real', 'proxy_printed', 'proxy_pending', 'note']); w.writeheader(); w.writerows(sorted(by.values(), key=lambda r: r['card']))
 def precon(fname):
     import urllib.request
@@ -79,8 +79,8 @@ def add(form, qty, name):
     if not n: print('unknown card:', name); return
     e = col.setdefault(n, dict(real=0, proxy_printed=0, proxy_pending=0)); e[form] += int(qty); save(col); print(n, e)
 def load():
-    col = {r['card']: dict(real=int(r['real']), proxy_printed=int(r['proxy_printed']), proxy_pending=int(r['proxy_pending'])) for r in csv.DictReader(open(os.path.join(INV, 'collection.csv')))}
-    alloc = list(csv.DictReader(open(os.path.join(INV, 'allocations.csv'))))
+    col = {r['card']: dict(real=int(r['real']), proxy_printed=int(r['proxy_printed']), proxy_pending=int(r['proxy_pending'])) for r in csv.DictReader(open(os.path.join(INV, 'collection.csv'), encoding='utf-8'))}
+    alloc = list(csv.DictReader(open(os.path.join(INV, 'allocations.csv'), encoding='utf-8')))
     return col, alloc
 def needs(deck):
     U, idx, nm = canon(); col, alloc = load()
